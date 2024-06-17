@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "api"
+version = "0.1.0"
+description = "API para o modelo de NPL de suporte aos clientes de uma loja online de tecnologia"
+authors = ["Juclénio António <52287318+JuclenioAntonio@users.noreply.github.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+djangorestframework = "^3.15.1"
+Markdown = "^3.6"
+django-filter = "^24.2"
+django = "^5.0.6"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
