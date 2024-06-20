@@ -5,16 +5,29 @@ import { lazy, Suspense, useEffect, useState } from "react";
 const ChatBot = lazy(() => import("react-chatbotify"));
 
 interface FormData {
-    nome: string;
+    nome_cliente: string;
     email: string;
     classificacao: number;
-    avaliacao: string;
+    descricao: string;
+    canal_feedback: string;
+    produto: string;
+}
+
+const initialState: FormData = {
+    nome_cliente: "Juclénio António",
+    email: "juclenio@example.com",
+    classificacao: 5,
+    descricao: "lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+    canal_feedback: "EMAIL",
+    produto: "PRODUTOA",
+
 }
 
 
 export const MyChatBot = () => {
     const [isLoaded, setIsLoaded] = useState(false);
-    const [form, setForm] = React.useState({});
+    // const [form, setForm] = React.useState({});
+    const [formData, setFormData] = useState<FormData>(initialState);
 
     useEffect(() => {setIsLoaded(true);}, [])
 
@@ -47,30 +60,30 @@ export const MyChatBot = () => {
         },
         Feedback: {
             message: "Qual é o seu nome",
-            function: (params) => setForm({...form, name: params.userInput}),
+            function: (params) => setFormData({...formData, nome_cliente: params.userInput}),
             path: "AskEmail"    
         },
         AskEmail:{
             message: "Qual é o seu email?",
-            function: (params) => setForm({...form, email: params.userInput}),
+            function: (params) => setFormData({...formData, email: params.userInput}),
             path: "AskClassificacao"
         },
         AskClassificacao:{
             message: "Qual é a classifcação de 1 à 5",
             checkboxes: {items: ["5", "4", "3", "2", "1"], min: 1},
             chatDisabled: true,
-            function: (params) => setForm({...form, classificacao: params.userInput}),
+            function: (params) => setFormData({...formData, classificacao: params.userInput}),
             path:"AskAvaliacao"
         },
         AskAvaliacao: {
             message: "Digite a sua avaliação",
-            function: (params) => setForm({...form, avaliacao: params.userInput}),
+            function: (params) => setFormData({...formData, descricao: params.userInput}),
             path: "GotoBeginning"
         },
         GotoBeginning: {
             message: async (params) => {
 				let data = await feedbackAPI(params);
-                return data.title
+                return data
 			},
             options: ["Suporte", "Feedback"],
             chatDisabled: true,
@@ -85,17 +98,22 @@ export const MyChatBot = () => {
     // Call feedback API
     const feedbackAPI = async () => {
         try {
-            const response = await fetch('https://jsonplaceholder.typicode.com/todos/1', {
-                method: 'GET',
+            const response = await fetch('http://127.0.0.1:8000/api/feedback/', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
+                body: JSON.stringify(formData),
             });
             
             if(response.ok) {
                 let data = await response.json();
                 console.table(data);
-                return data;
+                return "data enviado com sucesso!";
+            }else{
+                let data = await response.json();
+                console.table(data);
+                return "Erro ao enviar dados!";
             }
             
         } catch (error) {
