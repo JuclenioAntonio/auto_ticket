@@ -59,7 +59,7 @@ if question := st.chat_input():
 
   # Call the local LLM and wait for the generation to finish. This is just a quick demo and we can improve it
   # with better ways in the future.
-  command = ['llm', '-m', 'llama-2-7b-chat', prompt]
+  command = ['llm', '-m', 'orca-mini-3b-gguf2-q4_0', prompt]
   process = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
   content = ''
   while True:

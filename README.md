@@ -22,14 +22,36 @@ Processamento da Linguagem Natural: As entradas do cliente são processadas util
 2. Feedback
 
 
- 
-3. install llm
-4. install gpt4all
-5. list models available
-6. running a query 
-   1. llm -m llama-2-7b-chat "What is Large Language Model?"
+### Instalação do projecto
 
-
-Running the docker container
-`docker run --pull=always -d -p 8888:8888 epsilla/vectordb`
+1. Fazer o clone da aplicação usando o git `git clone https://github.com/JuclenioAntonio/auto_ticket.git`
+2. Configurar API
+   1. Instalar as dependências do projecto
+      - `> cd auto_ticket/api/`
+      - `> poetry shell`
+      - `> poetry install`
+   2. Instalar dependências do modelo LLM
+      - `> cd auto_ticket/api/`
+      - `> poetry shell`
+      - `> llm install llm-gpt4all`
+      - `> llm -m orca-mini-3b-gguf2-q4_0 "What is Large Language Model?"`
+   3. Configurar a base de dados vetorizada
+      - `> docker pull epsilla/vectordb`
+      - `> docker run --pull=always -d -p 8888:8888 epsilla/vectordb`
+   4. Testar base de dados vetorizada
+      - `> cd auto_ticket/api/src`
+      - `> poetry shell`
+      - `> python learn.py`
+   5. Testar o chatbot
+      - `> cd auto_ticket/api/src`
+      - `> poetry shell`
+      - `> streamlit run app.py`
+   6. Rodar a API
+      - `> cd auto_ticket/api/support`
+      - `> poetry shell`
+      - `> python manage.py runserver`
+3. Configurar o front-end
+   1. `> cd auto_ticket/web`
+   2. `> npm install`
+   3. `> npm run dev`
 

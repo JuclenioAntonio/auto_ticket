@@ -56,7 +56,14 @@ export const MyChatBot = () => {
         },
         Suporte: {
             message: "Descreva um pouco sobre o seu problema:",
-            path: "end"
+            path: "RespostaSuporte"
+        },
+        RespostaSuporte:{
+            message: async (params) => {
+				let data = await supportAPI(params);
+                return data
+			},
+            path:"end"
         },
         Feedback: {
             message: "Qual é o seu nome",
@@ -120,6 +127,33 @@ export const MyChatBot = () => {
             console.error('Error:', error);
         }
     }
+
+      // Call support API
+      const supportAPI = async (params) => {
+        try {
+            const response = await fetch('http://127.0.0.1:8000/api/faq/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({query:params.userInput}),
+            });
+            
+            if(response.ok) {
+                let data = await response.json();
+                console.table(data);
+                return data;
+            }else{
+                let data = await response.json();
+                console.table(data);
+                return "Erro ao enviar dados!";
+            }
+            
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
+
 
 	return (
         <>
