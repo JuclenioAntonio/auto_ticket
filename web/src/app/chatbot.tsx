@@ -61,7 +61,7 @@ export const MyChatBot = () => {
         RespostaSuporte:{
             message: async (params) => {
 				let data = await supportAPI(params);
-                return data
+                return data.response;
 			},
             path:"end"
         },

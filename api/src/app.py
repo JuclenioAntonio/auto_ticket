@@ -28,7 +28,7 @@ vector_store.use_collection("LocalChatCollection")
 # The 1st welcome message
 st.title("💬 Chatbot")
 if "messages" not in st.session_state:
-  st.session_state["messages"] = [{"role": "assistant", "content": "How can I help you?"}]
+  st.session_state["messages"] = [{"role": "assistant", "content": "Olá! Como posso ajudá-lo?"}]
 
 # A fixture of chat history
 for msg in st.session_state.messages:
@@ -44,16 +44,16 @@ if question := st.chat_input():
 
   # Here we use prompt engineering to ingest the most relevant pieces of chunks from knowledge into the prompt.
   prompt = f'''
-    Answer the Question based on the given Context. Try to understand the Context and rephrase them.
-    Please don't make things up or say things not mentioned in the Context. Ask for more information when needed.
+    Responda à pergunta com base no contexto fornecido. Tente entender o contexto e reformule a pergunta.
+    Não invente coisas nem diga coisas não mencionadas no contexto. Peça mais informações quando necessário.
 
-    Context:
+    Contexto:
     {context}
 
-    Question:
+    Pergunta:
     {question}
 
-    Answer:
+    Resposta:
     '''
   print(prompt)
 

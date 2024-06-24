@@ -18,29 +18,20 @@ class FeedbackViewSet(viewsets.ModelViewSet):
 @api_view(['POST'])
 def queryset_faq(request):
 
-
-    token_access = "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"
+    token_access = "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"
     headers = {'Authorization': f'Bearer {token_access}', 'Content-Type': 'application/json'  }
-    api_url = "https://api-inference.huggingface.co/models/meta-llama/Llama-2-7b-chat-hf"
+    api_url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-70B-Instruct"
     query = request.data.get('query')
 
-
-    json_body = {
-        "inputs": query,
-        "parameters": {"max_new_tokens":256, "top_p":0.9, "temperature":0.7}
-        }
-    
-    data = json.dumps(json_body)
-    response = requests.post(api_url, headers=headers, data=data)
-
-    print(f"Error: {response.text}")
-
+    json_body = {"inputs": query + "responda em Português.",}
+    response = requests.post(api_url, headers=headers, json=json_body)    
     try:
         if response.status_code == 200:
-            return Response(data={'response': response.json()['choices'][0]['text']})
+            data = response.json()
+            answer = data[0]["generated_text"].split('\n')
+            print(answer)
+            return Response(data={'response': answer[-1]})
         else:
-            print(f"Error: {response.text}")
             return Response(data={'response': "Nada foi encontrado, tente novamente"})
-    except Exception as er:
-        print(er)    
-        return Response(data={'response': "Nada foi encontrado, tente novamente"})
+    except Exception as er:  
+        return Response(data={'response': "Nada foi encontrado, tente novamente1"})

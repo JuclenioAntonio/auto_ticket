@@ -20,7 +20,7 @@ class LocalEmbeddings():
 embeddings = LocalEmbeddings()
 
 for file in files:
-    loader = TextLoader(file)
+    loader = TextLoader(file, encoding="utf-8")
     documents = loader.load()
     splitted_documents = CharacterTextSplitter(separator="\n", chunk_size=1000, chunk_overlap=200).split_documents(documents)
 

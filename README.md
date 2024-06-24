@@ -2,7 +2,6 @@
 
 
 ## Objetivos:
-
 1. Suporte 24/7: Responder perguntas frequentes e direcionar clientes para os recursos adequados.
 
 ## Canais
@@ -10,20 +9,14 @@
 
 
 ## Funcionamento:
-
 1. Recepção de Interação: O cliente pode interagir com o sistema através de chatbots, e-mail ou outros canais.
 Processamento da Linguagem Natural: As entradas do cliente são processadas utilizando técnicas de PLN, como tokenização, lematização, análise sintática e semântica.
 
-2. Identificação da Intenção: O sistema identifica a intenção do cliente, como obter suporte, enviar feedback ou abrir um ticket.
+1. Identificação da Intenção: O sistema identifica a intenção do cliente, como obter suporte ou enviar feedback.
 
 
-## Base de Dados
-1. FAQs
-2. Feedback
 
-
-### Instalação do projecto
-
+## Instalação do projecto
 1. Fazer o clone da aplicação usando o git `git clone https://github.com/JuclenioAntonio/auto_ticket.git`
 2. Configurar API
    1. Instalar as dependências do projecto
