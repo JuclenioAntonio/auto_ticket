@@ -55,16 +55,31 @@ export const MyChatBot = () => {
             path: (params) => `${params.userInput}`
         },
         Suporte: {
-            message: "Descreva um pouco sobre o seu problema:",
+            message: "Descreva um pouco sobre o seu problema",
             path: "RespostaSuporte"
         },
         RespostaSuporte:{
             message: async (params) => {
-				let data = await supportAPI(params);
-                return data.response;
+                let data = await supportAPI(params);
+                return data.response.trim();
 			},
-            path:"end"
+            chatDisabled: true,
+            transition: {duration: 1000},
+            path: "SuporteOpcoes"
         },
+        SuporteOpcoes:{
+            message:'Tem mais alguma pergunta?"',
+            options: ["Sim", "Não"],
+            chatDisabled: true,
+            path: (parms) => {
+                switch (parms.userInput) {
+                    case "Sim":
+                        return "Suporte";
+                    case "Não":
+                        return "end";
+                    default:
+                        return "end";
+            }},},
         Feedback: {
             message: "Qual é o seu nome",
             function: (params) => setFormData({...formData, nome_cliente: params.userInput}),
