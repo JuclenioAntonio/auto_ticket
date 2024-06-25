@@ -1,24 +1,28 @@
+'''
+    Controladores para gestão de feedback e atendimento ao cliente com FAQ
+'''
+from typing import List
+import os
+import requests
 from rest_framework import permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-import requests, json
-
-# 
 from langchain.vectorstores import Epsilla
 from pyepsilla import vectordb
 from sentence_transformers import SentenceTransformer
-
-import subprocess as st
-from typing import List
+from dotenv import load_dotenv
 
 from . import models, serializers
-# Create your views here.
+
+
 
 model = SentenceTransformer('all-MiniLM-L6-v2')
-
+load_dotenv()
 
 class LocalEmbeddings():
+    '''Conversão e consulta na base de dados vetorizada'''
     def embed_query(self, text: str) -> List[float]:
+        ''' Converte a consulta em lista de ids'''
         return model.encode(text).tolist()
 
 embeddings = LocalEmbeddings()
@@ -43,7 +47,7 @@ class FeedbackViewSet(viewsets.ModelViewSet):
 
 @api_view(['POST'])
 def queryset_faq(request):
-    token_access = "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"
+    token_access = os.getenv('HUGGINGFACE_API_TOKEN')
     headers = {'Authorization': f'Bearer {token_access}', 'Content-Type': 'application/json'  }
     api_url = "https://api-inference.huggingface.co/models/meta-llama/Meta-Llama-3-70B-Instruct"
     query = request.data.get('query')
