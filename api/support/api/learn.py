@@ -11,7 +11,7 @@ from glob import glob
 model = SentenceTransformer("all-MiniLM-L6-v2")
 
 # Get list of all files in ".documents"
-files = glob("../local-chatbot/documents/*")
+files = glob("../data/documents/*")
 
 class LocalEmbeddings():
     def embed_documents(self, texts: List[str]) -> List[list[float]]:

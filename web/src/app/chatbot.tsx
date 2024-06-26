@@ -53,6 +53,33 @@ export const MyChatBot = () => {
             options: ["Suporte", "Feedback"],
             chatDisabled: true,
             path: (params) => `${params.userInput}`
+            // path: (params) => {
+            //     switch (params.userInput) {
+            //         case "Suporte":
+            //             return "opcoesSuporte";
+            //         case "Feedback":
+            //             return "Feedback";
+            //         default:
+            //             return "opcoesSuporte";
+            //     }
+            // }
+        },
+        opcoesSuporte: {
+            message: "Quais as opções de suporte?",
+            options: ["Como funciona", "Como usar", "Outras dúvidas"],
+            chatDisabled: true,
+            path: (params) => {
+                switch (params.userInput) {
+                    case "Como funciona":
+                        return "ComoFunciona";
+                    case "Como usar":
+                        return "ComoUsar";
+                    case "Outras dúvidas":
+                        return "OutrasDudas";
+                    default:
+                        return "end";
+                }
+            }
         },
         Suporte: {
             message: "Descreva um pouco sobre o seu problema",
